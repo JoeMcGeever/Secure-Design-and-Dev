@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Director Home</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+            <li><a href="/create_artist">Register a new Artist</a></li>
+			<li><a href="/create_coach">Register a new Coach</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+
+<main>
+    <div>
+    <h1>Artists: </h1>
+
+    <table border = "1" cellpadding = "5" cellspacing = "5">
+     <thead>
+        <td>Username</td>
+        <td>Email</td>
+        <td>Birthdate</td>
+        <td>Class</td>
+     </thead>
+     {% for artist in artists %}
+        <tr>
+            <td> {{ artist[0] }} </td>
+            <td> {{ artist[1] }} </td>
+            <td> {{ artist[2] }} </td>
+            <td> {{ artist[3] }} </td>
+            <td>
+                <form>
+                    <input type="hidden" name="artistID" value="{{artist[4]}}">
+                    <input type="hidden" name="isArtist" value="true">
+                    <input type = "submit" value = "Reset Password" />
+                </form>
+            </td>
+        </tr>
+     {% endfor %}
+    </table>
+
+    </div>
+
+    <div>
+        <h2>Staff: </h2>
+
+    <table border = "1" cellpadding = "5" cellspacing = "5">
+     <thead>
+        <td>StaffID</td>
+        <td>Username</td>
+        <td>Role</td>
+     </thead>
+     {% for user in staff %}
+        <tr>
+            <td> {{ user[0] }} </td>
+            <td> {{ user[1] }} </td>
+            <td> {{ user[2] }} </td>
+            <td>
+                <form name="form1" action = "{{ url_for('reset_pass_director') }}" method = "POST">
+                    <input type="hidden" name="staffID" value="{{user[0]}}">
+                    <input type="hidden" name="isArtist" value="false">
+                    <input type = "submit" value = "Reset Password" />
+                </form>
+            </td>
+        </tr>
+     {% endfor %}
+    </table>
+
+        </div>
+</main>
+   </body>
+</html>

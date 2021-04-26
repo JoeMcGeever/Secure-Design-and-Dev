@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coach Home</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+    <h1> Coach Home</h1>
+
+<div style="text-align: center;display: flex;    justify-content: center;">
+<figure>
+        Create a new class?
+        <form name="form1" action = "{{ url_for('create_class') }}" method = "POST">
+            <input type="radio" id="adult" name="adultClass" value=1>
+            <label for="adult">Over 18</label><br>
+            <input type="radio" id="child" name="adultClass" value=0>
+            <label for="child">Under 18</label><br>
+            <input type="submit" value="Submit">
+        </form>
+
+    </figure>
+</div>
+<main>
+
+<figure>
+    <h2> Classes:</h2>
+
+       <table border = "1" cellpadding = "5" cellspacing = "5">
+     <thead>
+        <td>Class ID</td>
+        <td>Link</td>
+     </thead>
+     {% for classID in classes %}
+        <tr>
+            <td> {{ classID[0] }} </td>
+            <td>
+                <a href="{{ url_for('class_details', classID=classID)}}"><button> View Class </button></a>
+            </td>
+        </tr>
+     {% endfor %}
+    </table>
+</figure>
+</main>
+   </body>
+</html>

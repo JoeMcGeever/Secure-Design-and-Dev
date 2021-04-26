@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Session</title>
+   <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+			<li><a href="/coach_home">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+<main>
+
+      <figure>
+         <h1>Create Session</h1>
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+      <form name="form1" action = "{{ url_for('create_session') }}" method = "POST">
+         <br>
+         Where? <br>
+         <input type = "text" name = "location" /><br><br>
+         Day?<br>
+         <input type="date" name="day" min="{{ today }}"/><br><br>
+          Time?
+          <br> Note: all sessions lasts 2 hours as per club regulations. <br>
+          {% if isAdult == 1 %}
+               <input type="time" name="time"
+                 min="06:00"  required>
+          {% else %}
+          Under 18 sessions cannot start before 18:00 <br>
+                <input type="time" name="time"
+                 min="06:00" max="18:00" required>
+          {% endif %}
+
+          <input type="hidden" name="classID" value="{{ classID }}">
+
+         <input type = "submit" value = "Create Session" />
+      </form>
+         </figure>
+</main>
+   </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artist Details</title>
+   <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+			<li><a href="/artist_home">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+<main>
+
+      <figure>
+         <h1>My Details</h1>
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+      <form name="form1" action = "{{ url_for('artist_edit') }}" method = "POST">
+         <br>
+
+         Username <br>
+         <input type = "text" name = "username" value="{{data[0]}}"/><br><br>
+
+          Email <br>
+         <input type = "text" name = "email" value="{{data[1]}}" /><br><br>
+
+          Birthdate <br>
+          <label>{{data[2]}}</label><br><br>
+
+          Class ID <br>
+          <label>{{data[3]}}</label><br><br>
+
+          If you wish to change your password, please contact the Director. <br>
+
+         <input type = "submit" value = "Confirm Edit" />
+      </form>
+         </figure>
+</main>
+   </body>
+</html>

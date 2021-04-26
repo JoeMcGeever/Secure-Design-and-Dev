@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Artist</title>
+   <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+			<li><a href="/director_home">Home</a></li>
+			<li><a href="/create_coach">Register a new Coach</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+<main>
+
+      <figure>
+         <h1>Create Artist</h1>
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+      <form name="form1" action = "{{ url_for('create_artist') }}" method = "POST">
+         <br>
+         Username <br>
+         <input type = "text" name = "username" /><br><br>
+
+          Email <br>
+         <input type = "text" name = "email" /><br><br>
+          Birthdate <br>
+          <input type="date" name="birthdate" max="{{ minAge }}"/><br><br>
+
+         Temporary Password<br>
+         <input type="text" name="password"/><br><br>
+          Note: The user will have to create their own password once they login for the first time.
+          <br> Let the new user now their temporary password so they can login and update their information.
+          <br>
+          <br>
+          ClassID <br>
+          <select name="classID">
+              {% for class in classDetails %}
+                    <option value="{{class[0]}}">
+                        ClassID:{{ class[0] }} Coach: {{class[2]}}.
+                        {% if class[1]==1%}
+                            Over 18
+                        {% else %}
+                            Under 18
+                        {%endif%}
+                    </option>
+              {% endfor %}
+          </select>
+
+
+
+<!--          <input type="text" name="classID"/><br><br>-->
+
+         <input type = "submit" value = "Create artist" />
+      </form>
+         </figure>
+</main>
+   </body>
+</html>

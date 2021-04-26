@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artist Home</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+			<li><a href="/artist_edit">Update your details</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+
+
+    <h1> Artist Home</h1>
+<div style="text-align: center;display: flex;    justify-content: center;">
+    <figure style="text-align: center">
+        <h2> Attendance:</h2>
+        <h3> {{attendance}}% </h3>
+        <h2> Number of unexplained, missed sessions:</h2>
+        <h3> {{missedSessions}} </h3>
+    </figure>
+</div>
+
+
+    <h2>Upcoming sessions</h2>
+<main>
+
+    {% for class in classes %}
+    <figure>
+        <h2> Location:</h2>
+        <h3>{{class[3]}}</h3>
+        <h2> When: </h2>
+        <h3>{{class[1]}}</h3>
+    </figure>
+
+    {% endfor %}
+
+
+
+</main>
+   </body>
+</html>

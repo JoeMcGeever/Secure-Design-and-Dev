@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Coach</title>
+   <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+			<li><a href="/director_home">Home</a></li>
+			<li><a href="/create_artist">Register a new Artist</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+<main>
+
+      <figure>
+         <h1>Create Coach</h1>
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+      <form name="form1" action = "{{ url_for('create_coach') }}" method = "POST">
+         <br>
+         Username <br>
+         <input type = "text" name = "username" /><br><br>
+          Email <br>
+         <input type = "text" name = "email" /><br><br>
+         Temporary Password<br>
+         <input type="text" name="password"/><br><br>
+          Note: The user will have to create their own password once they login for the first time.
+          <br> Let the new user now their temporary password so they can login and update their information.
+          <br>
+         <input type = "submit" value = "Create coach" />
+      </form>
+         </figure>
+</main>
+   </body>
+</html>

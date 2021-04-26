@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Sheet</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+		<ul>
+            <li><a href="/coach_home">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+    <h2> Attendance sheet:</h2>
+
+<main>
+
+
+    <form name="form1" action = "{{ url_for('attendance') }}" method = "POST">
+
+
+
+       <table border = "1" cellpadding = "2" cellspacing = "2">
+     <thead>
+        <td>Name</td>
+        <td>Status</td>
+     </thead>
+     {% for i in attendance %}
+        <tr>
+            <td> {{ i[0] }} </td>
+            <td>
+                <select name={{i[1]}} id={{i}}>
+                    <option value="n/a" {% if i[2]=='n/a' %} selected="selected"{% endif %}>n/a</option>
+                   <option value="present" {% if i[2]=='present' %} selected="selected"{% endif %}>present</option>
+                    <option value="explainedAbscence"{% if i[2]=="explainedAbscence" %} selected="selected"{% endif %}>explained abscence</option>
+                    <option value="unexplainedAbscence"{% if i[2]=="unexplainedAbscence" %} selected="selected"{% endif %}>unexplained abscence</option>
+                </select>
+            </td>
+        </tr>
+     {% endfor %}
+    </table>
+
+    <input type = "hidden" name = "sessionID" value = {{sessionID}} />
+    <input type = "submit" value = "Submit Changes" />
+
+    </form>
+
+
+
+</main>
+   </body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Class details</title>-->
+<!--    <link rel="stylesheet" href="./static/main.css">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header>-->
+<!--        <img src = "./static/images/logo.png">-->
+<!--	</header>-->
+
+<!--    <nav>-->
+<!--		<ul>-->
+<!--            <li><a href="/coach_home">Home</a></li>-->
+<!--            <li><a href="/create_session?classID={{details}}">Create a Session</a></li>-->
+<!--            <li><a href="/logout">Logout</a></li>-->
+<!--		</ul>-->
+<!--	</nav>-->
+<!--    <h2> Attendance sheet:</h2>-->
+
+<!--<main>-->
+
+
+<!--    <form name="form1" action = "{{ url_for('attendance') }}" method = "POST">-->
+
+
+
+<!--       <table border = "1" cellpadding = "2" cellspacing = "2">-->
+<!--     <thead>-->
+<!--        <td>Name</td>-->
+<!--        <td>Status</td>-->
+<!--     </thead>-->
+<!--     {% for i in range(0, attendance|length) %}-->
+<!--        <tr>-->
+<!--            <td> {{ attendance[i][0] }} </td>-->
+<!--            <td>-->
+<!--                <select name={{attendance[i][1]}} id={{i}}>-->
+<!--                    <option value="n/a" {% if attendance[i][2]=='n/a' %} selected="selected"{% endif %}>n/a</option>-->
+<!--                   <option value="present" {% if attendance[i][2]=='present' %} selected="selected"{% endif %}>present</option>-->
+<!--                    <option value="explainedAbscence"{% if attendance[i][2]=="explainedAbscence" %} selected="selected"{% endif %}>explained abscence</option>-->
+<!--                    <option value="unexplainedAbscence"{% if attendance[i][2]=="explainedAbscence" %} selected="selected"{% endif %}>unexplained abscence</option>-->
+<!--                </select>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--     {% endfor %}-->
+<!--    </table>-->
+
+<!--    <input type = "hidden" name = "sessionID" value = {{sessionID}} />-->
+<!--    <input type = "submit" value = "Submit Changes" />-->
+
+<!--    </form>-->
+
+
+
+<!--</main>-->
+<!--   </body>-->
+<!--</html>-->

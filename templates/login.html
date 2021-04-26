@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+<header>
+        <img src = "./static/images/logo.png">
+	</header>
+
+    <nav>
+
+	</nav>
+<main>
+<figure class='login' style="text-align : center">
+    {% if staff %}
+    <h1>Staff Log-in</h1>
+    {% else %}
+    <h1>Artist Log-in</h1>
+    {% endif %}
+
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+<form name="login" action = "{{ url_for('login') }}" method = "POST">
+	<p><label>Username</label><br /><input type="text" name="username" placeholder="username" /></p>
+	<p><label>Password</label><br /><input type="password" name="password" placeholder="password" /></p>
+	{% if staff %}
+    <input type="hidden" name= "userType" value="staff"/>
+    {% else %}
+    <input type="hidden" name= "userType" value="artist"/>
+    {% endif %}
+    <p><button type="submit" id="login">Log in</button></p>
+</form>
+
+   {% if staff %}
+    <a href = "\login">
+        <button type="submit">Member login</button>
+    </a>
+    {% else %}
+    <a href = "\login?user=staff">
+        <button type="submit">Staff login</button>
+    </a>
+
+    {% endif %}
+
+</figure>
+</main>
+   </body>
+</html>
