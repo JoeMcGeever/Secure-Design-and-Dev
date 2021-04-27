@@ -1,3 +1,5 @@
+import re
+
 from Artist import Artist
 from Staff import Staff
 from UserRepo import UserRepo
@@ -35,3 +37,24 @@ class UserService:
         hashed = bcrypt.hashpw(password, salt)
         decodedHash = hashed.decode('utf-8')
         return repo.passIsSet(userID, decodedHash, usertype)
+
+    def passwordCheck(self, passwd):
+        SpecialSym = ['$', '@', '#', '%', '!', '?']
+        if len(passwd) < 8:
+            return "length should be at least 6"
+        if not any(char.isdigit() for char in passwd):
+             return "Password should have at least one numeral"
+        if not any(char.isupper() for char in passwd):
+            return "Password should have at least one uppercase letter"
+        if not any(char.islower() for char in passwd):
+            return "Password should have at least one lowercase letter"
+        if not any(char in SpecialSym for char in passwd):
+            return "Password should have at least one of the symbols $@#"
+        return True
+
+    def checkEmail(self, email):
+        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+        if (re.search(regex, email)):
+            return True
+        else:
+            return False

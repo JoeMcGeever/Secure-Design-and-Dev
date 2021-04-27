@@ -102,6 +102,11 @@ def reset_pass():
     userID = request.form['userID']
     role = request.form['role']
     service = UserService()
+    error = service.passwordCheck(newPass)
+    print(error)
+    if error is not True:
+        return render_template('resetPass.html', userID=userID,
+                               role=role, error=error)  # this means its the first time they logged in
     if service.resetPass(userID, newPass, role):
         print("updated")
         return redirect(url_for(role + '_home')) # go to correct home page for the role
@@ -222,12 +227,16 @@ def create_artist():
         password = request.form['password']
         birthdate = request.form['birthdate']
         email = request.form['email']
-        classID = request.form['classID']
-        response = service.register_artist(username, password, birthdate, email, classID)
-        if response != True:
-            error = response
+        userService = UserService()
+        if userService.checkEmail(email) is False:
+            error = "Not a valid email"
         else:
-            return redirect(url_for('director_home'))
+            classID = request.form['classID']
+            response = service.register_artist(username, password, birthdate, email, classID)
+            if response != True:
+                error = response
+            else:
+                return redirect(url_for('director_home'))
     classDetails = service.get_all_class_details()
     date = datetime.date(datetime.today()) - timedelta(days=7*365)
     return render_template('registerArtist.html', minAge=date, error=error, classDetails=classDetails)
@@ -241,6 +250,9 @@ def create_coach():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        userService = UserService()
+        if userService.checkEmail(email) is False:
+            return render_template('registerCoach.html', error="Email is not valid")
         service = DirectorService()
         response = service.register_coach(username, password, email)
         if response == False:
@@ -304,9 +316,13 @@ def artist_edit():
     if request.method=="POST":
         newUsername = request.form['username']
         newEmail = request.form['email']
-        response = service.update_details(newUsername,newEmail, artistID)
-        if response is False:
-            error="Error editing data. Please contact the director"
+        userService = UserService()
+        if userService.checkEmail(newEmail) is False:
+            error = "Not a valid email"
+        else:
+            response = service.update_details(newUsername,newEmail, artistID)
+            if response is False:
+                error="Error editing data. Please contact the director"
     response = service.get_details(artistID)
     if response is None:
         return redirect(url_for('artist_home'))
