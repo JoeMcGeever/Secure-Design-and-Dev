@@ -13,6 +13,9 @@ class EmailService:
                          + " please login with this temporary password to reset your account"
                          + "<br> <b>" + str(randomPassword) + "</br>")
         try:
+            if os.environ.get('database_name') == "dance_club_test":
+                print("IN TEST MODE")
+                return True
             sg = SendGridAPIClient(os.environ.get('email'))
             response = sg.send(message)
             print(response.status_code)

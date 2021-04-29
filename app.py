@@ -128,7 +128,6 @@ def director_home():
     return render_template('directorHome.html', artists=artists, staff=staff)
 
 
-
 @app.route('/reset_pass_director', methods=["POST"])
 def reset_pass_director():
     service = DirectorService()
@@ -138,8 +137,6 @@ def reset_pass_director():
     else:
         staffID = request.form['staffID']
         response = service.reset_password(staffID, 'staff')
-    print(response)
-
 
     if response is True:
         return redirect(url_for('director_home'))
@@ -281,6 +278,7 @@ def create_session():
     error = None
     if request.method =="POST":
         location = request.form['location']
+        print("AHAHAIAHJHAJAHJA")
         day = request.form['day']
         time = request.form['time']
         classID = request.form['classID']
@@ -288,6 +286,7 @@ def create_session():
         response = service.createSession(classID, location, day, time)
         if response is False:
             error = "Error creating session. Please contact the director"
+
     if 'coachID' not in session: #authentication - least authorized principle
         return redirect(url_for('login'))
     classID = request.args.get('classID', None)

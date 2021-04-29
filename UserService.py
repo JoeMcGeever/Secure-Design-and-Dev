@@ -5,13 +5,13 @@ from Staff import Staff
 from UserRepo import UserRepo
 import bcrypt
 
-repo = UserRepo()
 
 
 class UserService:
+    repo = UserRepo()
 
     def login(self, username, password, usertype):
-        data = repo.checkDetails(username, password, usertype)
+        data = self.repo.checkDetails(username, password, usertype)
         if data is None:
             return None
         print(data)
@@ -36,12 +36,12 @@ class UserService:
         salt = bcrypt.gensalt(rounds=10)
         hashed = bcrypt.hashpw(password, salt)
         decodedHash = hashed.decode('utf-8')
-        return repo.passIsSet(userID, decodedHash, usertype)
+        return self.repo.passIsSet(userID, decodedHash, usertype)
 
     def passwordCheck(self, passwd):
         SpecialSym = ['$', '@', '#', '%', '!', '?']
         if len(passwd) < 8:
-            return "length should be at least 6"
+            return "length should be at least 8"
         if not any(char.isdigit() for char in passwd):
              return "Password should have at least one numeral"
         if not any(char.isupper() for char in passwd):

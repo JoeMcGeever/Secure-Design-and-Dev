@@ -1,4 +1,5 @@
 from datetime import date
+from os import environ
 
 from flask import Flask
 from flaskext.mysql import MySQL
@@ -10,13 +11,12 @@ app = Flask(__name__, template_folder="templates")
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''#environ.get('database_password') # password protected
-if app.config['TESTING'] is True:
-    app.config['MYSQL_DATABASE_DB'] = 'dance_club_test'
-else:
-    app.config['MYSQL_DATABASE_DB'] = 'dance_club'
+app.config['MYSQL_DATABASE_PASSWORD'] = environ.get('database_password') or '' # password protected
+app.config['MYSQL_DATABASE_DB'] = environ.get('database_name')
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
+
+
 
 
 class ArtistRepo:

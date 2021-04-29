@@ -2,20 +2,21 @@ from UserRepo import UserRepo
 from EmailService import EmailService
 from random_word import RandomWords
 import bcrypt
-repo = UserRepo()
+
 
 
 class DirectorService:
+    repo = UserRepo()
 
     def register_coach(self, username, password, email):
         password = password.encode('utf-8')
         salt = bcrypt.gensalt(rounds=10)
         hashed = bcrypt.hashpw(password, salt)
         decodedHash = hashed.decode('utf-8')
-        repo.createCoach(username, decodedHash, email)
+        self.repo.createCoach(username, decodedHash, email)
 
     def register_artist(self, username, password, birthdate, email, classID):
-        response = repo.checkClassCompatibility(classID, birthdate)
+        response = self.repo.checkClassCompatibility(classID, birthdate)
         if response != True:
             print(response)
             return response
@@ -24,21 +25,21 @@ class DirectorService:
         salt = bcrypt.gensalt(rounds=10)
         hashed = bcrypt.hashpw(password, salt)
         decodedHash = hashed.decode('utf-8')
-        if repo.createArtist(username, decodedHash, birthdate, email, classID) is False:
+        if self.repo.createArtist(username, decodedHash, birthdate, email, classID) is False:
             return "Error inserting user details"
         else:
             return True
 
 
     def get_all_artists(self):
-        return repo.getAllArtists()
+        return self.repo.getAllArtists()
 
     def get_all_staff(self):
-        return repo.getAllStaff()
+        return self.repo.getAllStaff()
 
 
     def get_all_class_details(self):
-        return repo.getAllClasses()
+        return self.repo.getAllClasses()
 
 
     def reset_password(self, userID, role):

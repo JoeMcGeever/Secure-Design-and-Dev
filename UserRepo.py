@@ -13,8 +13,8 @@ app = Flask(__name__, template_folder="templates")
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''#environ.get('database_password') # password protected
-app.config['MYSQL_DATABASE_DB'] = 'dance_club'
+app.config['MYSQL_DATABASE_PASSWORD'] = environ.get('database_password') or ''
+app.config['MYSQL_DATABASE_DB'] =  environ.get('database_name')
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
@@ -23,6 +23,13 @@ class UserRepo:
 
 
     def checkDetails(self, username, password, usertype):
+        con = mysql.connect()  # set up database connection
+        cur = con.cursor()
+        if (usertype == "staff"):  # if staff, check the staff table
+            cur.execute("SELECT * FROM staff WHERE username=%s", username)
+        else:  # otherwise check the artist table
+            cur.execute("SELECT * FROM artist WHERE username=%s", username)
+        result = cur.fetchone()
         try:
             con = mysql.connect()  # set up database connection
             cur = con.cursor()
@@ -58,10 +65,6 @@ class UserRepo:
         return True
 
     def createArtist(self, username, password, birthdate, email, classID):
-        con = mysql.connect()  # set up database connection
-        cur = con.cursor()
-        cur.execute("INSERT INTO artist (username, password, birthdate, email, classID) VALUES (%s, %s, %s, %s, %s)", (username, password, birthdate, email, classID))
-
 
         try:
             con = mysql.connect()  # set up database connection
